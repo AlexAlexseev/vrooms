@@ -1,4 +1,5 @@
 {% extends "shop/base.html" %}
+{% load thumbnail %}
 {% load static %}
 {% block title %}
     Your shopping cart
@@ -20,34 +21,33 @@
         {% for item in cart %}
             {% with product=item.product %}
                 <tr>
-                    <td>
-                        <a href="{{ product.get_absolute_url }}">
-                            <img src="
-                                {% if product.image %}
-                                    {{ product.image.url }}
-                                {% else %}
-                                    {% static "img/no_image.png" %}
-                                {% endif %}">
-                        </a>
+                    <td class="product-detail">
+                        
+                            {% thumbnail product.image "160x100" crop="center" upscale=True as im %}
+                            <img src="{% if product.image %}{{ im.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
+                            {% endthumbnail %}
+                         
                     </td>
-                    <td>{{ product.name }}</td>
-                    <td>{{ item.quantity }}</td>
+                    <td>&ensp;{{ product.name }}&ensp; </td>
+                    <td>&ensp; {{ item.quantity }}&ensp; </td>
                     <td><a href="{% url "cart:cart_remove" product.id%}"> Удалить </a></td>
-                    <td class="num">${{ item.price }}</td>
-                    <td class="num">${{ item.total_price }}</td>
+                    <td class="num">&ensp; ${{ item.price }}&ensp; </td>
+                    <td class="num">&ensp; ${{ item.total_price }}&ensp; </td>
                 </tr>
             {% endwith %}
         {% endfor %}
         <tr class="total">
             <th>Всего</th>
             <td colspan="4"></td>
-            <th class="num">${{ cart.get_total_price }}</th>
+            <th class="num">&ensp; ${{ cart.get_total_price }}</th>
         </tr>
         </tbody>
     </table>
     <p class="text-right">
         <a href="{% url "shop:product_list" %}" class="button light">Продожить</a>
-        <a href="#" class="button">Заказать</a>
+        <a href="{% url "orders:order_create" %}" class="button">
+            Checkout
+        </a>
     </p>
 
 {% endblock %}
