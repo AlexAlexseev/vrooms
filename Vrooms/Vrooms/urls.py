@@ -16,3 +16,5 @@ urlpatterns = [
 
 if settings.DEBUG:
    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+#    https://pocoz.gitbooks.io/django-v-primerah/content/glava-7-sozdanie-internet-magazina/sozdanie-korzini/registratsiya-zakazov/sozdanie-zakazov-klientov.html
