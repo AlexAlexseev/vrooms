@@ -19,17 +19,7 @@ class Category(models.Model):
         return reverse('shop:product_list_by_category',
                         args=[self.slug])
 
-class Dopolnenie(models.Model):
-    name = models.CharField(max_length=200, db_index=True)
-    dop1 = models.CharField(max_length=20)
-    price_dop1 = models.DecimalField(max_digits=10, decimal_places=2)
-    available_dop1 = models.BooleanField(default=False)
-    prod = models.ForeignKey('Product', related_name='dopolnenies', blank=True, null=True, on_delete=models.SET_NULL)
 
-    
-
-    def __str__(self):
-        return self.name
 
 class Product(models.Model):
     category = models.ForeignKey(Category, related_name='products', blank=True, null=True, on_delete=models.SET_NULL)
@@ -43,7 +33,8 @@ class Product(models.Model):
     available = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    dopolnenie = models.ForeignKey(Dopolnenie, related_name='products', blank=True, null=True, on_delete=models.SET_NULL)
+    dopolneniya = models.ManyToManyField('Dopolnenie', blank=True, null=True)
+    # dopolnenie = models.ManyToManyField(Dopolnenie)
 
     class Meta:
         ordering = ('name',)
@@ -56,4 +47,13 @@ class Product(models.Model):
         return reverse('shop:product_detail',
                         args=[self.id, self.slug])
     
-    
+class Dopolnenie(models.Model):
+    category = models.CharField(max_length=200, db_index=True)
+    name = models.CharField(max_length=20, blank=True, null=True)
+    price_dop1 = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    available_dop1 = models.BooleanField(default=False, blank=True, null=True)
+    products = models.ManyToManyField(Product, blank=True, null=True)
+    # n prod = models.ForeignKey('Product', related_name='dopolnenies', blank=True, null=True, on_delete=models.SET_NULL)
+
+    def __str__(self):
+        return self.name

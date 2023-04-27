@@ -2,9 +2,16 @@ from django.db import models
 from shop.models import Product
 from django.core.validators import RegexValidator
 
+PAY_CHOICES = [
+        ('N', 'Наличные'),
+        ('C','Картой'),
+        ('D','Депозит'),
+    ]
+
 class Order(models.Model):
     first_name = models.CharField(blank=True, max_length=50)
     last_name = models.CharField(max_length=50)
+    pay = models.CharField(max_length=1, choices=PAY_CHOICES, blank=False)
     email = models.EmailField(blank=False)
     room = models.CharField(blank=True, max_length=3)
     phoneNumberRegex = RegexValidator(regex = r"^\+?1?\d{8,15}$")
