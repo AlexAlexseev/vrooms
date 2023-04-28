@@ -5,11 +5,6 @@
     {% if category %}{{ category.title }}{% else %}Товары{% endif %}
 {% endblock %}
 {% block content %}
-<div class="item-product rounded-lg overflow-hidden shadow mb-3 relative bg-white flex-1">
-    <div class="px-3 py-4">
-        <div class="flex-1">
-            <div class="item-product bg-white rounded-2xl mb-3 p-3 rounded-xl shadow w-full flex">
-                <div class="bg-cover bg-top rounded-xl h-24 w-32 md:h-32 md:w-40 flex-shrink-0 pr-3">
     <div class="product-detail">
         {% thumbnail product.image "320x200" crop="center" upscale=True as im %}
         <img src="{% if product.image %}{{ im.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
@@ -25,6 +20,4 @@
         </form>
         {{ product.description|linebreaks }}
     </div>
-</div>
-</div>
 {% endblock %}

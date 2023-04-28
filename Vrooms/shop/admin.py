@@ -18,7 +18,8 @@ class DopInline(admin.TabularInline):
     model = Product.dopolneniya.through
 
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ['name', 'slug']
+    list_display = ['id', 'name', 'slug']
+    list_editable = ['name', 'slug']
     prepopulated_fields = {'slug': ('name',)}
 admin.site.register(Category, CategoryAdmin)
 

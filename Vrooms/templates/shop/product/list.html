@@ -5,6 +5,29 @@
     {% if category %}{{ category.name }}{% else %}Products{% endif %}
 {% endblock %}
 {% block content %}
+
+
+<nav>
+    <ul>
+      <li><a href="#section_11950">Раздел 1</a></li>
+      <li><a href="#section2">Раздел 2</a></li>
+      <li><a href="#section3">Раздел 3</a></li>
+    </ul>
+  </nav>
+  {% comment %} <section id="section1">
+    <!-- Содержимое раздела 1 -->
+  </section>
+  
+  <section id="section2">
+    <!-- Содержимое раздела 2 -->
+  </section>
+  
+  <section id="section3">
+    <!-- Содержимое раздела 3 -->
+  </section> {% endcomment %}
+  
+
+  
     <div id="sidebar">
         <h3>Categories</h3>
         <div align="center">
@@ -17,11 +40,77 @@
                 {% for c in categories %}
                     <p {% if category.slug == c.slug %}class="selected"{% endif %}>
                         <a href="{{ c.get_absolute_url }}">{{ c.name }}</a> </p>
+
+                        {% endfor %}
+
+                        {% comment %} <p>asdasdas</p>
+                        <p> Категория товара: {{ cat_prod1 }}
+                        {% for product in products %}
+                        <p> Категория товара: {{ product.category.name }}
+                        <div class="item-product rounded-lg overflow-hidden shadow mb-3 relative bg-white flex-1">
+                            <div class="px-3 py-4">
+                                <div class="flex-1">
+                                    <div class="item-product bg-white rounded-2xl mb-3 p-3 rounded-xl shadow w-full flex">
+                                        <div class="bg-cover bg-top rounded-xl h-24 w-32 md:h-32 md:w-40 flex-shrink-0 pr-3">
+                                <a href="{{ product.get_absolute_url }}">
+                                    {% thumbnail product.image "160x100" crop="center" upscale=True as im %}
+                                    <img alt class=" h-full object-cover w-full rounded-xl" src="{% if product.image %}{{ im.url }}{% else %}{% static "img/no_image.png" %}{% endif %}" >
+                                    {% endthumbnail %} 
+                                    {% comment %} {% thumbnail product.image "160x100" crop="center" upscale=True as im %}
+                                    <img src="{% if product.image %}{{ im.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
+                                    {% endthumbnail %} {% endcomment %}
+                                {% comment %} </a>
+                            </div>
+                            <div class="w-full flex flex-col justify-between"><div>
+                                <div class="leading-tight truncate-text line-clamp-2">
+                                <a href="{{ product.get_absolute_url }}">{{ product.name }}</a><br> {% endcomment %}
+                                {% comment %} ${{ product.price }} {% endcomment %}
+                            {% comment %} </div>
+                            <div class="text-gray-600 mt-2 text-xs"><p>{{ product.weight }}</p></div>
+                                <form action="{% url "cart:cart_add" product.id %}" method="post">
+                                    {% csrf_token %}
+                                    {{ cart_product_form }}
+                        
+                                    <input type="submit" value="{{ product.price }} &#8381;">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                        </div>
+                        </div>
+                        {% endfor %} {% endcomment %} 
+
                     {% comment %} </li> {% endcomment %}
-                {% endfor %}
+                {% comment %} {% endfor %} {% endcomment %}
             {% comment %} </ul> {% endcomment %}
         </div>
     </div>
+
+    {% for category in categories %}
+    <li>{{ category.name }}</li>
+    <ul>
+        {% for product in sorted_products %}
+            {% if product.category == category %}
+                <li>{{ products.name }} - {{ products.price }}</li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+{% endfor %}
+
+
+
+
+    {% for category in categories %}
+    <h2>{{ category.name }}</h2>
+    <ul>
+      {% for product in products %}
+        {% if product.category.name == category.name %}
+          <li>{{ product.name }}</li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  {% endfor %}
+  <p>{{ sorted_products }} </p>
 
     <div class="container">
         <div id="app" style="--main-font:Arial; --main-color:#B21E28; --footer-color:#B21E28; padding-bottom: 400px;" class="palmira">
@@ -30,8 +119,9 @@
     <div class="products relative">
         <div data-navbarid="topmenu-item_11950" data-id="11950" id="section_11950" class="content_products px-2 pb-2 mb-4">
         <div id="main" class="product-list">
-            <h1>{% if category %}{{ category.name }}{% else %}Products{% endif %}</h1>
+            <h1>{% if category %}{{ category.name }}{% else %}Products1{{  cat_prod.description }}{% endif %}</h1>
             {% for product in products %}
+            <p> Категория товара: {{ product.category.name }}
             <div class="item-product rounded-lg overflow-hidden shadow mb-3 relative bg-white flex-1">
                 <div class="px-3 py-4">
                     <div class="flex-1">
