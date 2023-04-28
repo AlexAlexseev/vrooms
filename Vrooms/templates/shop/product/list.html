@@ -23,20 +23,52 @@
         </div>
     </div>
 
-    <div align="center">
+    <div class="container">
+        <div id="app" style="--main-font:Arial; --main-color:#B21E28; --footer-color:#B21E28; padding-bottom: 400px;" class="palmira">
+    <div class="wrapper">
+    <div class="container">
+    <div class="products relative">
+        <div data-navbarid="topmenu-item_11950" data-id="11950" id="section_11950" class="content_products px-2 pb-2 mb-4">
         <div id="main" class="product-list">
             <h1>{% if category %}{{ category.name }}{% else %}Products{% endif %}</h1>
             {% for product in products %}
-                <div class="item">
+            <div class="item-product rounded-lg overflow-hidden shadow mb-3 relative bg-white flex-1">
+                <div class="px-3 py-4">
+                    <div class="flex-1">
+                        <div class="item-product bg-white rounded-2xl mb-3 p-3 rounded-xl shadow w-full flex">
+                            <div class="bg-cover bg-top rounded-xl h-24 w-32 md:h-32 md:w-40 flex-shrink-0 pr-3">
                     <a href="{{ product.get_absolute_url }}">
                         {% thumbnail product.image "160x100" crop="center" upscale=True as im %}
+                        <img alt class=" h-full object-cover w-full rounded-xl" src="{% if product.image %}{{ im.url }}{% else %}{% static "img/no_image.png" %}{% endif %}" >
+                        {% endthumbnail %} 
+                        {% comment %} {% thumbnail product.image "160x100" crop="center" upscale=True as im %}
                         <img src="{% if product.image %}{{ im.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
-                        {% endthumbnail %}
+                        {% endthumbnail %} {% endcomment %}
                     </a>
-                    <a href="{{ product.get_absolute_url }}">{{ product.name }}</a><br>
-                    ${{ product.price }}
                 </div>
+                <div class="w-full flex flex-col justify-between"><div>
+                    <div class="leading-tight truncate-text line-clamp-2">
+                    <a href="{{ product.get_absolute_url }}">{{ product.name }}</a><br>
+                    {% comment %} ${{ product.price }} {% endcomment %}
+                </div>
+                <div class="text-gray-600 mt-2 text-xs"><p>{{ product.weight }}</p></div>
+                    <form action="{% url "cart:cart_add" product.id %}" method="post">
+                        {% csrf_token %}
+                        {{ cart_product_form }}
+            
+                        <input type="submit" value="{{ product.price }} &#8381;">
+                    </form>
+                </div>
+            </div>
+        </div>
+            </div>
+            </div>
             {% endfor %}
         </div>
     </div>
+</div>
+</div>
+</div>
+</div>
+</div>
 {% endblock %}

@@ -33,7 +33,7 @@ class Product(models.Model):
     available = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    dopolneniya = models.ManyToManyField('Dopolnenie', blank=True, null=True)
+    dopolneniya = models.ManyToManyField('Dopolnenie', blank=True)
     # dopolnenie = models.ManyToManyField(Dopolnenie)
 
     class Meta:
@@ -52,7 +52,7 @@ class Dopolnenie(models.Model):
     name = models.CharField(max_length=20, blank=True, null=True)
     price_dop1 = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     available_dop1 = models.BooleanField(default=False, blank=True, null=True)
-    products = models.ManyToManyField(Product, blank=True, null=True)
+    products = models.ManyToManyField(Product, blank=True)
     # n prod = models.ForeignKey('Product', related_name='dopolnenies', blank=True, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
