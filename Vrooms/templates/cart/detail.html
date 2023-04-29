@@ -36,15 +36,15 @@
                     <td>&ensp;{{ product.name }}&ensp; </td>
                     <td>&ensp; {{ item.quantity }}&ensp; </td>
                     <td><a href="{% url "cart:cart_remove" product.id%}"> Удалить </a></td>
-                    <td class="num">&ensp; ${{ item.price }}&ensp; </td>
-                    <td class="num">&ensp; ${{ item.total_price }}&ensp; </td>
+                    <td class="num">&ensp; {{ item.price }}&#8381;&ensp; </td>
+                    <td class="num">&ensp; {{ item.total_price }}&#8381;&ensp; </td>
                 </tr>
             {% endwith %}
         {% endfor %}
         <tr class="total">
             <th>Всего</th>
             <td colspan="4"></td>
-            <th class="num">&ensp; ${{ cart.get_total_price }}</th>
+            <th class="num">&ensp; {{ cart.get_total_price }} &#8381;</th>
         </tr>
         </tbody>
     </table>

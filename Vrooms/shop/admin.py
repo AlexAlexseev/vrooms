@@ -30,7 +30,7 @@ class ProductAdmin(admin.ModelAdmin):
     # list_display = ['name', 'slug', 'price', 'description', 'weight', 'available', 'created', 'updated']
     # list_filter = ['available', 'created', 'updated']
     # list_editable = ['price', 'available', 'description', 'weight']
-    # prepopulated_fields = {'slug': ('name',)}
+    prepopulated_fields = {'slug': ('name',)}
     inlines = [DopInline]
     # inlines = [DopInLine]
 
