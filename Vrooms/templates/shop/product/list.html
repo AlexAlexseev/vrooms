@@ -2,16 +2,16 @@
 {% load thumbnail %}
 {% load static %}
 {% block title %}
-    {% if category %}{{ category.name }}{% else %}Products{% endif %}
+    {% if category %}{{ category.name }}{% else %}Продукты{% endif %}
 {% endblock %}
 {% block content %}
     <div id="sidebar">
-        <h3>Categories</h3>
+        <h3>Категории</h3>
         <div align="center">
             {% comment %} <ul> {% endcomment %}
                 {% comment %} <li {% if not category %}class="selected"{% endif %}> {% endcomment %}
                     <p {% if not category %}class="selected"{% endif %} >
-                    <a href="{% url "shop:product_list" %}">All</a>
+                    <a href="{% url "shop:product_list" %}">Все</a>
                 </p>
                 {% comment %} </li> {% endcomment %}
                 {% for c in categories %}
@@ -25,7 +25,7 @@
 
     <div align="center">
         <div id="main" class="product-list">
-            <h1>{% if category %}{{ category.name }}{% else %}Products{% endif %}</h1>
+            <h1>{% if category %}{{ category.name }}{% else %}Продукты{% endif %}</h1>
             {% for product in products %}
                 <div class="item">
                     <a href="{{ product.get_absolute_url }}">
@@ -34,7 +34,31 @@
                         {% endthumbnail %}
                     </a>
                     <a href="{{ product.get_absolute_url }}">{{ product.name }}</a><br>
-                    ${{ product.price }}
+                    <p>  {{ product.description}} </p>
+                    {{ product.price }} &#8381
+                    
+                    {{ product.weight }}
+                    {{ product.dopolnenie.dop1 }}
+
+                    {% for item in product.dopolnenie.all %}
+                    <p>{{ item }}</p>
+                {% endfor %}
+
+                    {% comment %} {% for dop in dopolnenies %}
+                    <p>Дополнение1: {{ dop.name }}</p>
+                    {% endfor %} {% endcomment %}
+                    <p>{% if product.dopolnenie %}
+                        <p>Дополнение: {{ product.dopolnenie }}</p>
+                      {% endif %}</p>
+                    
+                    
+                   
+                    <form action="{% url "cart:cart_add" product.id %}" method="post">
+                        {% csrf_token %}
+                        {{ cart_product_form }}
+            
+                        <input type="submit" value="Добавить">
+                    </form>
                 </div>
             {% endfor %}
         </div>

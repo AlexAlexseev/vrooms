@@ -2,7 +2,7 @@
 {% load thumbnail %}
 {% load static %}
 {% block title %}
-    {% if category %}{{ category.title }}{% else %}Товары{% endif %}
+    {% if category %}{{ category.title }}{% else %}Продукты{% endif %}
 {% endblock %}
 {% block content %}
     <div class="product-detail">
@@ -10,14 +10,20 @@
         <img src="{% if product.image %}{{ im.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
         {% endthumbnail %}
         <h1>{{ product.name }}</h1>
-        <h2><a href="{{ product.category.get_absolute_url }}">{{ product.category }}</a></h2>
-        <p class="price">${{ product.price }}</p>
+        <h3><a href="{{ product.category.get_absolute_url }}">{{ product.category }}</a></h3>
+        <p> {{ product.description|linebreaks }}</p>
+        <p><p>Дополнение: {{ product.dopolnenie.id }}</p>
+          </p>
+        <p class="price">{{ product.price }} &#8381</p>
+
+        {{ product.dopolnenie.name }}
+
         <form action="{% url "cart:cart_add" product.id %}" method="post">
             {% csrf_token %}
             {{ cart_product_form }}
 
             <input type="submit" value="Add to cart">
         </form>
-        {{ product.description|linebreaks }}
+
     </div>
 {% endblock %}

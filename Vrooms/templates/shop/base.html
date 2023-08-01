@@ -16,8 +16,8 @@
                 {% if cart|length > 0 %}
                     Ваш заказ:
                     <a href="{% url "cart:cart_detail" %}">
-                        {{ total_items }} блюд {{ total_items|pluralize:"а, " }},
-                        ${{ cart.get_total_price }}
+                        {{ total_items }} позици{{ total_items|pluralize:"я,и" }},
+                        {{ cart.get_total_price }} &#8381
                     </a>
                 {% else %}
                     Ваша корзина пуста.

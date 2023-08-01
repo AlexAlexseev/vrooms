@@ -26,8 +26,6 @@ class Dopolnenie(models.Model):
     available_dop1 = models.BooleanField(default=False)
     prod = models.ForeignKey('Product', related_name='dopolnenies', blank=True, null=True, on_delete=models.SET_NULL)
 
-    
-
     def __str__(self):
         return self.name
 
